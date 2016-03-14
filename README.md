@@ -12,4 +12,4 @@ The testExample project showcases how to write a plugin for the "Post-Build Acti
 
 There are a myriad number of write-ups (both in print and on-line) for writing new "Build" plugins for Jenkins but few resources explaining how to write "Publisher"-type plugins used in the "Post-Build" phase of Jenkins Continuous Integration (CI). This source code goes hand-in hand with the two URLs at the top of this README file.
 
-That being said there are a number of issues with this particular source-tree - chiefly: some of the methods invoked in the project have been deprecated. This form aims to clean that up and push back to Pritic's repo.
+That being said there are a number of issues with this particular source-tree - chiefly: some of the methods invoked in the project have been deprecated. This fork aims to clean that up and push back to Pritic's repo.

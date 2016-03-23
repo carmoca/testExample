@@ -36,7 +36,7 @@ preventing the hpi/jar from being built.
 
 1. From the 'Projects' tab, right-click on the project's name (testExample).
 1. Mouse over 'Set Configuration'
-1. When the context windows expands, click 'Jenkins' form the selection.
+1. When the context window expands, click 'Jenkins' from the selection.
     1. This will load the pom.xml file, read the entries, and (upon clickong
        'Set Configutation' again) will show more options in the context window.
 

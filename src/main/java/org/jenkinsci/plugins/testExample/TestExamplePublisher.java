@@ -2,12 +2,15 @@ package org.jenkinsci.plugins.testExample;
 
 import hudson.Launcher;
 import hudson.Extension;
-import hudson.model.Action;
+import hudson.FilePath;
 import hudson.tasks.*;
 import hudson.util.FormValidation;
 import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
 import hudson.model.AbstractProject;
+import hudson.model.Run;
+import hudson.model.TaskListener;
+import jenkins.tasks.SimpleBuildStep;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
@@ -33,7 +36,7 @@ import java.io.IOException;
  *
  * @author Kohsuke Kawaguchi
  */
-public class TestExamplePublisher extends Recorder {
+public class TestExamplePublisher extends Recorder implements SimpleBuildStep {
 
     private final String name;
 
@@ -52,21 +55,15 @@ public class TestExamplePublisher extends Recorder {
     }
 
     @Override
-    public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
+    public void perform(Run<?,?> build, FilePath workspace, Launcher launcher, TaskListener listener) {
         // This is where you 'build' the project.
         // Since this is a dummy, we just say 'hello world' and call that a build.
 
         // This also shows how you can consult the global configuration of the builder
-        String message;
         if (getDescriptor().getUseFrench())
-            message= "Bonjour, " + name + "!";
+            listener.getLogger().println("Bonjour, "+name+"!");
         else
-            message="Hello, " + name + "!";
-
-        TestExampleBuildAction buildAction = new TestExampleBuildAction(message, build);
-        build.addAction(buildAction);
-
-        return true;
+            listener.getLogger().println("Hello, "+name+"!");
     }
 
     // Overridden for better type safety.
@@ -80,11 +77,6 @@ public class TestExamplePublisher extends Recorder {
     @Override
     public BuildStepMonitor getRequiredMonitorService() {
         return BuildStepMonitor.NONE;
-    }
-
-    @Override
-    public Action getProjectAction(AbstractProject<?, ?> project) {
-        return new TestExampleProjectAction(project);
     }
 
     /**

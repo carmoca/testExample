@@ -61,7 +61,7 @@ public class TestExampleProjectAction implements Action {
 
         for (AbstractBuild<?, ?> currentBuild : builds) {
             projectMessage = "Build #"+currentBuild.getAction(buildClass).getBuildNumber()
-                    +": "+currentBuild.getAction(buildClass).getMessage() + " I made this! ";
+                    +": "+currentBuild.getAction(buildClass).getMessage();
             projectMessages.add(projectMessage);
         }
         return projectMessages;

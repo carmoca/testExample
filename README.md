@@ -1,7 +1,7 @@
 # Jenkins Plugin Template
 
 Project: testExample
-Version: >= 1.62
+Jenkins Version: >= 1.62
 
 This is a Jenkins Post-build Plugin repository created for
 https://developer.rackspace.com/blog/jenkins-post-build-plugin-part-1/ and

@@ -36,7 +36,7 @@ import java.io.IOException;
  *
  * @author Kohsuke Kawaguchi
  */
-public class TestExamplePublisher extends Recorder implements SimpleBuildStep {
+public class TestExamplePublisher extends Recorder {
 
     private final String name;
 
@@ -54,16 +54,28 @@ public class TestExamplePublisher extends Recorder implements SimpleBuildStep {
         return name;
     }
 
+    /**
+     *
+     * @param build
+     * @param launcher
+     * @param listener
+     * @return 
+     */
     @Override
-    public void perform(Run<?,?> build, FilePath workspace, Launcher launcher, TaskListener listener) {
+    public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
         // This is where you 'build' the project.
         // Since this is a dummy, we just say 'hello world' and call that a build.
-
-        // This also shows how you can consult the global configuration of the builder
+                
+        String message;
         if (getDescriptor().getUseFrench())
-            listener.getLogger().println("Bonjour, "+name+"!");
+            message= "Bonjour, " + name + "!";
         else
-            listener.getLogger().println("Hello, "+name+"!");
+            message="Hello, " + name + "!";
+
+        TestExampleBuildAction buildAction = new TestExampleBuildAction(message, build);
+        build.addAction(buildAction);
+        
+        return true;
     }
 
     // Overridden for better type safety.

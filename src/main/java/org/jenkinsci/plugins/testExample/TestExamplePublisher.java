@@ -2,15 +2,12 @@ package org.jenkinsci.plugins.testExample;
 
 import hudson.Launcher;
 import hudson.Extension;
-import hudson.FilePath;
 import hudson.tasks.*;
 import hudson.util.FormValidation;
 import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
 import hudson.model.AbstractProject;
-import hudson.model.Run;
-import hudson.model.TaskListener;
-import jenkins.tasks.SimpleBuildStep;
+import java.io.BufferedReader;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
@@ -18,6 +15,8 @@ import org.kohsuke.stapler.QueryParameter;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * Sample {@link Publisher}.
@@ -38,7 +37,8 @@ import java.io.IOException;
  */
 public class TestExamplePublisher extends Recorder {
 
-    private final String name;
+    private final String name;     
+    private String message;
 
     // Fields in config.jelly must match the parameter names in the "DataBoundConstructor"
     @DataBoundConstructor
@@ -53,6 +53,22 @@ public class TestExamplePublisher extends Recorder {
     public String getName() {
         return name;
     }
+    
+    private static String output(InputStream inputStream) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new InputStreamReader(inputStream));
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                sb.append(line + System.getProperty("line.separator"));
+            }
+        } finally {
+            if(br != null)
+                br.close();
+        }
+        return sb.toString();
+    }
 
     /**
      *
@@ -62,7 +78,13 @@ public class TestExamplePublisher extends Recorder {
      * @return 
      */
     @Override
-    public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
+    public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) throws IOException, InterruptedException {
+        ProcessBuilder pb = new ProcessBuilder("echo", "This is ProcessBuilder Example from VTunerPublisher.");
+        System.out.println("Run echo command");
+        Process process = pb.start();
+        int errCode = process.waitFor();
+        System.out.println("Echo command executed, any errors? " + (errCode == 0 ? "No" : "Yes"));
+        message = output(process.getInputStream());
         // This is where you 'build' the project.
         // Since this is a dummy, we just say 'hello world' and call that a build.
                 

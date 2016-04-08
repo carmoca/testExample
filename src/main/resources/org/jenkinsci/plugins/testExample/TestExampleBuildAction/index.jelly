@@ -5,6 +5,17 @@
         <l:main-panel>
             <h1>${it.displayName}</h1>
             <h2>Build #${it.buildNumber}'s Output: ${it.message}</h2>
+            <j:forEach items="${it.words}" var="jvar_word">
+                ${jvar_word}
+            </j:forEach>
+
+            <g:evaluate>
+                var colorArray = [ "blue","red","green" ];
+            </g:evaluate>
+
+            <j:forEach items="${colorArray}" var="jvar_color">
+            ${jvar_color}
+            </j:forEach>
         </l:main-panel>
     </l:layout>
 </j:jelly>

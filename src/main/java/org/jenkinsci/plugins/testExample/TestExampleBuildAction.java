@@ -2,6 +2,7 @@ package org.jenkinsci.plugins.testExample;
 
 import hudson.model.AbstractBuild;
 import hudson.model.Action;
+import java.util.ArrayList;
 
 /**
  * Created by prit8976 on 8/27/15.
@@ -10,6 +11,7 @@ public class TestExampleBuildAction implements Action {
 
     private String message;
     private AbstractBuild<?, ?> build;
+    private String[] words = { "word 0","word 1","word 2","word 3","word 4","word 5"};
 
     /**
      * @brief Returns the Icon's path and filename to use. This icon will be 
@@ -73,6 +75,10 @@ public class TestExampleBuildAction implements Action {
     public AbstractBuild<?, ?> getBuild() {
         return build;
     }
+    
+    public String[] getWords() {
+        return words;
+    }
 
     /**
      * @brief Constructor.
@@ -82,9 +88,10 @@ public class TestExampleBuildAction implements Action {
      * @param message
      * @param build 
      */
-    TestExampleBuildAction(final String message, final AbstractBuild<?, ?> build)
+    TestExampleBuildAction(final String message, final AbstractBuild<?, ?> build, String[] words)
     {
         this.message = message;
         this.build = build;
+        this.words = words;
     }
 }

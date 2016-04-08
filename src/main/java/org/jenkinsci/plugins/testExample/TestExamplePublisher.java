@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 /**
  * Sample {@link Publisher}.
@@ -39,6 +40,7 @@ public class TestExamplePublisher extends Recorder {
 
     private final String name;     
     private String message;
+    private String[] words = { "word 0","word 1","word 2","word 3","word 4","word 5"};
 
     // Fields in config.jelly must match the parameter names in the "DataBoundConstructor"
     @DataBoundConstructor
@@ -54,11 +56,15 @@ public class TestExamplePublisher extends Recorder {
         return name;
     }
     
+    public String[] getWords() {
+        return words;
+    }
+    
     private static String output(InputStream inputStream) throws IOException {
         StringBuilder sb = new StringBuilder();
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new InputStreamReader(inputStream));
+            br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
             String line = null;
             while ((line = br.readLine()) != null) {
                 sb.append(line + System.getProperty("line.separator"));
@@ -84,17 +90,19 @@ public class TestExamplePublisher extends Recorder {
         Process process = pb.start();
         int errCode = process.waitFor();
         System.out.println("Echo command executed, any errors? " + (errCode == 0 ? "No" : "Yes"));
+        
         message = output(process.getInputStream());
+        
         // This is where you 'build' the project.
         // Since this is a dummy, we just say 'hello world' and call that a build.
                 
         String message;
         if (getDescriptor().getUseFrench())
-            message= "Bonjour, " + name + "!";
+            message = "Bonjour, " + name + "!";
         else
-            message="Hello, " + name + "!";
+            message = "Hello, " + name + "!";
 
-        TestExampleBuildAction buildAction = new TestExampleBuildAction(message, build);
+        TestExampleBuildAction buildAction = new TestExampleBuildAction(message, build, words);
         build.addAction(buildAction);
         
         return true;

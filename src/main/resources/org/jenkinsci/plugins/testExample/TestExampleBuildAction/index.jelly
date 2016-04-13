@@ -4,17 +4,9 @@
         <st:include it="${it.build}" page="sidepanel.jelly"/>
         <l:main-panel>
             <h1>${it.displayName}</h1>
-            <h2>Build #${it.buildNumber}'s Output: ${it.message}</h2>
-            <j:forEach items="${it.words}" var="jvar_word">
-                ${jvar_word}
-            </j:forEach>
-
-            <g:evaluate>
-                var colorArray = [ "blue","red","green" ];
-            </g:evaluate>
-
-            <j:forEach items="${colorArray}" var="jvar_color">
-            ${jvar_color}
+            <h2>Build #${it.buildNumber}'s Output: </h2>
+            <j:forEach var="word" items="${it.words}">
+                    <p>${word}</p>
             </j:forEach>
         </l:main-panel>
     </l:layout>

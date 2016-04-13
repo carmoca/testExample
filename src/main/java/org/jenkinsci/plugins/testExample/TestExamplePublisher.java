@@ -8,6 +8,7 @@ import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
 import hudson.model.AbstractProject;
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
@@ -17,7 +18,12 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Vector;
+import org.apache.commons.jelly.JellyContext;
+import org.apache.commons.jelly.XMLOutput;
 
 /**
  * Sample {@link Publisher}.
@@ -40,7 +46,7 @@ public class TestExamplePublisher extends Recorder {
 
     private final String name;     
     private String message;
-    private String[] words = { "word 0","word 1","word 2","word 3","word 4","word 5"};
+    private String[] words;// = { "word 0","word 1","word 2","word 3","word 4","word 5"};
 
     // Fields in config.jelly must match the parameter names in the "DataBoundConstructor"
     @DataBoundConstructor
@@ -85,22 +91,48 @@ public class TestExamplePublisher extends Recorder {
      */
     @Override
     public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) throws IOException, InterruptedException {
-        ProcessBuilder pb = new ProcessBuilder("echo", "This is ProcessBuilder Example from VTunerPublisher.");
+        ProcessBuilder pb = new ProcessBuilder("ps", "-ef");
         System.out.println("Run echo command");
         Process process = pb.start();
         int errCode = process.waitFor();
         System.out.println("Echo command executed, any errors? " + (errCode == 0 ? "No" : "Yes"));
         
         message = output(process.getInputStream());
+        words = message.split("\n");
         
         // This is where you 'build' the project.
         // Since this is a dummy, we just say 'hello world' and call that a build.
                 
-        String message;
-        if (getDescriptor().getUseFrench())
-            message = "Bonjour, " + name + "!";
-        else
-            message = "Hello, " + name + "!";
+//        OutputStream output = new FileOutputStream("demopage.html");
+//        JellyContext context = new JellyContext();
+//
+//        context.setVariable("name","Carl");
+//        context.setVariable("background","blue");
+//        context.setVariable("url","http://127.0.0.1:8080");
+//          // Set the hobby list
+//        Vector v = new Vector();
+//        
+//            v.add("Cycling");
+//            v.add("Programming");
+//            v.add("Gaming");
+//            v.add("Hiking");
+//            v.add("Camping");
+//            v.add("Backpacking");
+//            v.add("Mountain Biking");
+//            v.add("Cooking");
+//            v.add("Eating");
+//        context.setVariable("hobbies", v);
+//
+//        XMLOutput xmlOutput = XMLOutput.createXMLOutput(output);
+////        context.runScript("src/test/org/apache/commons/jelly/demos/"+template), xmlOutput);
+//        xmlOutput.flush();
+        
+//        words[0]= "word 0";
+//        words[1]= "word 1";
+//        words[2]= "word 2";
+//        words[3]= "word 3";
+//        words[4]= "word 4";
+//        words[5]= "word 5";
 
         TestExampleBuildAction buildAction = new TestExampleBuildAction(message, build, words);
         build.addAction(buildAction);

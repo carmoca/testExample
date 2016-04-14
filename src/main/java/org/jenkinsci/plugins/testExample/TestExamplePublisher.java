@@ -102,37 +102,6 @@ public class TestExamplePublisher extends Recorder {
         
         // This is where you 'build' the project.
         // Since this is a dummy, we just say 'hello world' and call that a build.
-                
-//        OutputStream output = new FileOutputStream("demopage.html");
-//        JellyContext context = new JellyContext();
-//
-//        context.setVariable("name","Carl");
-//        context.setVariable("background","blue");
-//        context.setVariable("url","http://127.0.0.1:8080");
-//          // Set the hobby list
-//        Vector v = new Vector();
-//        
-//            v.add("Cycling");
-//            v.add("Programming");
-//            v.add("Gaming");
-//            v.add("Hiking");
-//            v.add("Camping");
-//            v.add("Backpacking");
-//            v.add("Mountain Biking");
-//            v.add("Cooking");
-//            v.add("Eating");
-//        context.setVariable("hobbies", v);
-//
-//        XMLOutput xmlOutput = XMLOutput.createXMLOutput(output);
-////        context.runScript("src/test/org/apache/commons/jelly/demos/"+template), xmlOutput);
-//        xmlOutput.flush();
-        
-//        words[0]= "word 0";
-//        words[1]= "word 1";
-//        words[2]= "word 2";
-//        words[3]= "word 3";
-//        words[4]= "word 4";
-//        words[5]= "word 5";
 
         TestExampleBuildAction buildAction = new TestExampleBuildAction(message, build, words);
         build.addAction(buildAction);

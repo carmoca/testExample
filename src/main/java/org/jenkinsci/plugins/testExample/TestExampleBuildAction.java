@@ -76,7 +76,7 @@ public class TestExampleBuildAction implements Action {
         return build;
     }
     
-    public String[] getWords() {
+    public String[] getResults() {
         return results;
     }
 

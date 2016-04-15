@@ -8,7 +8,6 @@ import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
 import hudson.model.AbstractProject;
 import java.io.BufferedReader;
-import java.io.FileOutputStream;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
@@ -18,12 +17,6 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Vector;
-import org.apache.commons.jelly.JellyContext;
-import org.apache.commons.jelly.XMLOutput;
 
 /**
  * Sample {@link Publisher}.
@@ -46,7 +39,7 @@ public class TestExamplePublisher extends Recorder {
 
     private final String name;     
     private String message;
-    private String[] words;// = { "word 0","word 1","word 2","word 3","word 4","word 5"};
+    private String[] results;
 
     // Fields in config.jelly must match the parameter names in the "DataBoundConstructor"
     @DataBoundConstructor
@@ -63,7 +56,7 @@ public class TestExamplePublisher extends Recorder {
     }
     
     public String[] getWords() {
-        return words;
+        return results;
     }
     
     private static String output(InputStream inputStream) throws IOException {
@@ -98,12 +91,12 @@ public class TestExamplePublisher extends Recorder {
         System.out.println("Echo command executed, any errors? " + (errCode == 0 ? "No" : "Yes"));
         
         message = output(process.getInputStream());
-        words = message.split("\n");
+        results = message.split("\n");
         
         // This is where you 'build' the project.
         // Since this is a dummy, we just say 'hello world' and call that a build.
 
-        TestExampleBuildAction buildAction = new TestExampleBuildAction(message, build, words);
+        TestExampleBuildAction buildAction = new TestExampleBuildAction(message, build, results);
         build.addAction(buildAction);
         
         return true;

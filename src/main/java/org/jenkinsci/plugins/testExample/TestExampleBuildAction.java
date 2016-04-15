@@ -11,7 +11,7 @@ public class TestExampleBuildAction implements Action {
 
     private String message;
     private AbstractBuild<?, ?> build;
-    private String[] words;// = { "word 0","word 1","word 2","word 3","word 4","word 5"};
+    private String[] results;
 
     /**
      * @brief Returns the Icon's path and filename to use. This icon will be 
@@ -77,7 +77,7 @@ public class TestExampleBuildAction implements Action {
     }
     
     public String[] getWords() {
-        return words;
+        return results;
     }
 
     /**
@@ -88,10 +88,10 @@ public class TestExampleBuildAction implements Action {
      * @param message
      * @param build 
      */
-    TestExampleBuildAction(final String message, final AbstractBuild<?, ?> build, final String[] words)
+    TestExampleBuildAction(final String message, final AbstractBuild<?, ?> build, final String[] results)
     {
         this.message = message;
         this.build = build;
-        this.words = words;
+        this.results = results;
     }
 }

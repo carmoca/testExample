@@ -77,7 +77,7 @@ public class TestExampleBuildAction implements Action {
     }
     
     public String[] getResults() {
-        return results;
+        return results.clone();
     }
 
     /**

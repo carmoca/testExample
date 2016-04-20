@@ -2,7 +2,6 @@ package org.jenkinsci.plugins.testExample;
 
 import hudson.model.AbstractBuild;
 import hudson.model.Action;
-import java.util.ArrayList;
 
 /**
  * Created by prit8976 on 8/27/15.

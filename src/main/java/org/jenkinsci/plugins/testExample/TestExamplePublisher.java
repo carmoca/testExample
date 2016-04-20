@@ -49,17 +49,27 @@ public class TestExamplePublisher extends Recorder {
 
     /**
      * We'll use this from the <tt>config.jelly</tt>.
-     * @return 
+     * @return Returns the name of the project.
      */
     public String getName() {
         return name;
     }
     
-    public String[] getWords() {
+    /**
+     * @brief The method returns the results from the command that was executed.
+     * @return Returns a String array (String[]) of results from the command that was executed.
+     */
+    public String[] getResults() {
         return results;
     }
     
-    private static String output(InputStream inputStream) throws IOException {
+    /**
+     * @brief The method performs post-processing of the results from the ProcessBuilder API.
+     * @param inputStream The InputStream from the parent ProcessBuilder API call.
+     * @return The method returns a large, contiguous string containing the results from executing the pb.start() command.
+     * @throws IOException 
+     */
+    private static String getProcessResults(InputStream inputStream) throws IOException {
         StringBuilder sb = new StringBuilder();
         BufferedReader br = null;
         try {
@@ -76,11 +86,15 @@ public class TestExamplePublisher extends Recorder {
     }
 
     /**
-     *
-     * @param build
-     * @param launcher
-     * @param listener
-     * @return 
+     * @brief The method performs the bulk of the work in the application. 
+     * It launches a new ProcessBuilder command which allows the app to invoke 
+     * arbitrary commands.
+     * @param build A reference to the AbtractBuild build data.
+     * @param launcher A reference to the launcher that launched the plugin.
+     * @param listener The BuildListener to exchange messages with.
+     * @return Returns a boolean value indicating success (true) or failure (false).
+     * @throws IOException
+     * @throws InterruptedException 
      */
     @Override
     public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) throws IOException, InterruptedException {
@@ -90,7 +104,7 @@ public class TestExamplePublisher extends Recorder {
         int errCode = process.waitFor();
         System.out.println("Echo command executed, any errors? " + (errCode == 0 ? "No" : "Yes"));
         
-        message = output(process.getInputStream());
+        message = getProcessResults(process.getInputStream());
         results = message.split("\n");
         
         // This is where you 'build' the project.
@@ -110,6 +124,10 @@ public class TestExamplePublisher extends Recorder {
         return (DescriptorImpl) super.getDescriptor();
     }
 
+    /**
+     * @brief This application does not required a BuildStepMonitor so it returns none.
+     * @return Returns BuildStepMonitor.NONE
+     */
     @Override
     public BuildStepMonitor getRequiredMonitorService() {
         return BuildStepMonitor.NONE;
@@ -163,6 +181,11 @@ public class TestExamplePublisher extends Recorder {
             return FormValidation.ok();
         }
 
+        /**
+         * @brief Indicates that this builder can be used with all kinds of project types
+         * @param aClass
+         * @return Return a boolean true.
+         */
         @Override
         public boolean isApplicable(Class<? extends AbstractProject> aClass) {
             // Indicates that this builder can be used with all kinds of project types 
@@ -170,8 +193,9 @@ public class TestExamplePublisher extends Recorder {
         }
 
         /**
-         * This human readable name is used in the configuration screen.
-         * @return 
+         * @brief This human readable name is used in the configuration screen.
+         * @return Returns a String indicating the project's name for selection 
+         * on the Jenkins Configuration screen.
          */
         @Override
         public String getDisplayName() {

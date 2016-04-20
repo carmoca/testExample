@@ -45,14 +45,26 @@ public class TestExampleProjectAction implements Action {
         return "testExamplePA";
     }
 
+    /**
+     * @brief This method returns a reference to the AbstractProject<?,?> as defined upon the project's creation.
+     * @return This method returns a reference to the AbstractProject<?,?> as defined upon the project's creation.
+     */
     public AbstractProject<?, ?> getProject() {
         return this.project;
     }
 
+    /**
+     * @brief This method returns the project's name.
+     * @return This method returns the project's name. 
+     */
     public String getProjectName() {
         return this.project.getName();
     }
 
+    /**
+     * @brief This method returns the message results of the command issued.
+     * @return This method returns the message results of the command issued.
+     */
     public List<String> getProjectMessages() {
         List<String> projectMessages = new ArrayList<String>();
         List<? extends AbstractBuild<?, ?>> builds = project.getBuilds();
@@ -67,6 +79,10 @@ public class TestExampleProjectAction implements Action {
         return projectMessages;
     }
 
+    /**
+     * @brief Constructor for TestExampleProjectAction
+     * @param project AbstractProject<?,?>
+     */
     TestExampleProjectAction(final AbstractProject<?, ?> project) {
         this.project = project;
     }

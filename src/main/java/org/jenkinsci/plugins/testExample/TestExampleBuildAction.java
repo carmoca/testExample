@@ -59,7 +59,7 @@ public class TestExampleBuildAction implements Action {
     }
 
     /**
-     * This method returns the build number of the build being queried.
+     * @brief This method returns the build number of the build being queried.
      * @return Returns an int datatype corresponding to the build number.
      */
     public int getBuildNumber() {
@@ -67,7 +67,7 @@ public class TestExampleBuildAction implements Action {
     }
 
     /**
-     * This method returns the content of the data structure pertaining to this 
+     * @brief This method returns the content of the data structure pertaining to this 
      * build.
      * @return Returns an AbstractBuild<?,?> object containing information to
      * the specific build being queried.
@@ -76,6 +76,10 @@ public class TestExampleBuildAction implements Action {
         return build;
     }
     
+    /**
+     * @brief This method returns the results of the command configured by the Publisher.
+     * @return A clone of the 'results' array.
+     */
     public String[] getResults() {
         return results.clone();
     }

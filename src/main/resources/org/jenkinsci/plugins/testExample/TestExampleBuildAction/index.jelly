@@ -5,8 +5,8 @@
         <l:main-panel>
             <h1>${it.displayName}</h1>
             <h2>Build #${it.buildNumber}'s Output: </h2>
-            <j:forEach var="word" items="${it.words}">
-                    <p>${word}</p>
+            <j:forEach var="result" items="${it.results}">
+                    <p>${result}</p>
             </j:forEach>
         </l:main-panel>
     </l:layout>
